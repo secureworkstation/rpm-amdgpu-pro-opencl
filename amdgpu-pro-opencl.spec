@@ -3,7 +3,7 @@
 # https://aur.archlinux.org/packages/opencl-amd/
 
 # Download the source pkg with this command:
-# wget --referer https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx https://drivers.amd.com/drivers/linux/19.50/amdgpu-pro-19.50-967956-ubuntu-18.04.tar.xz
+# wget --referer https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx https://drivers.amd.com/drivers/linux/amdgpu-pro-20.10-1048554-ubuntu-18.04.tar.xz
 
 # This package creates a wrapper file "amdgporun" which is similar to "optirun"
 # or "primusrun" from Bumblebee times. In short, it enables the proprietary
@@ -17,24 +17,24 @@
 # Therefore it's illegal to distribute the .src.rpm or .rpm files to third
 # parties.
 
-%global major 19.50
-%global minor 967956
+%global major 20.10
+%global minor 1048554
 %global distro ubuntu-18.04
 
 # Version of downstream libdrm-amdgpu package
-%global amdver 2.4.99
+%global amdver 2.4.100
 
 # RPM flags
 %global debug_package %{nil}
 
 Name:           amdgpu-pro-opencl
 Version:        %{major}.%{minor}
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        OpenCL ICD driver for AMD graphic cards
 
 License:        EULA NON-REDISTRIBUTABLE
-URL:            https://www.amd.com/en/support/kb/release-notes/rn-rad-lin-19-50-unified
-Source0:        https://drivers.amd.com/drivers/linux/%{major}/amdgpu-pro-%{major}-%{minor}-%{distro}.tar.xz
+URL:            https://www.amd.com/en/support/kb/release-notes/rn-amdgpu-unified-linux-20-10
+Source0:        https://drivers.amd.com/drivers/linux/amdgpu-pro-%{major}-%{minor}-%{distro}.tar.xz
 
 ExclusiveArch:  x86_64
 #BuildRequires:  
@@ -63,6 +63,9 @@ ar x libgl1-amdgpu-pro-appprofiles_%{major}-%{minor}_all.deb
 tar -xJC files -f data.tar.xz
 ar x libdrm-amdgpu-amdgpu1_%{amdver}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
+# Since 20.10 we need AMD's libdrm for "drmSyncobjQuery2" symbol
+ar x libdrm2-amdgpu_%{amdver}-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
 
 %build
 echo '#!/bin/bash' > amdgporun
@@ -76,9 +79,14 @@ sed -i "s|/opt/amdgpu-pro/lib/i386-linux-gnu/|/usr/lib/amdgpu-pro-opencl////////
 popd
 
 pushd files/opt/amdgpu/lib/x86_64-linux-gnu/
+sed -i "s|libdrm_amdgpu.so.1|libdrm_amdgpo.so.1|g" libdrm_amdgpu.so.1.0.0
+sed -i "s|libdrm.so.2|libdro.so.2|g" libdrm_amdgpu.so.1.0.0 libdrm.so.2.4.0
 sed -i "s|/opt/amdgpu/share/|/usr/share////////|g" libdrm_amdgpu.so.1.0.0
 mv libdrm_{amdgpu,amdgpo}.so.1.0.0
 rm libdrm_amdgpu.so.1
+mv {libdrm,libdro}.so.2.4.0
+rm libdrm.so.2
+rm libkms.so.{1,1.0.0} # We probably don't need that right now
 popd
 
 %install
@@ -97,6 +105,7 @@ install -p -m644 files/usr/share/doc/libdrm-amdgpu-amdgpu1/copyright %{buildroot
 install -p -m755 amdgporun %{buildroot}%{_bindir}/
 
 ln -s libdrm_amdgpo.so.1.0.0 %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdrm_amdgpo.so.1
+ln -s libdro.so.2.4.0        %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdro.so.2
 
 %files
 %license %{_docdir}/amdgpu-pro-opencl/COPYRIGHT-AMDGPU-PRO
@@ -108,5 +117,8 @@ ln -s libdrm_amdgpo.so.1.0.0 %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdrm_amd
 
 
 %changelog
+* Tue Mar 10 2020 secureworkstation - 20.10.1048554-2
+- Update to 20.10
+
 * Tue Mar 10 2020 secureworkstation - 19.50.967956-1
 - Initial release
