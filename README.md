@@ -1,7 +1,7 @@
 AMDGPU-PRO OpenCL driver for Fedora
 ===================================
 
-We repackage the proprietary Ubuntu 18.04 driver for a clean
+We repackage the proprietary Ubuntu 20.04 driver for a clean
 installation on a Fedora system. It is meant to coexist with
 the free AMDGPU driver on a regular Fedora kernel (no proprietary
 kernel modules required). Kernel 5.6.7-300.fc32.x86_64 or newer
@@ -29,12 +29,12 @@ $ sudo dnf -y groupinstall 'RPM Development Tools'
 $ rpmdev-setuptree
 $ cd ~/rpmbuild/SOURCES
 $ wget --referer https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx \
-  https://drivers.amd.com/drivers/linux/amdgpu-pro-20.10-1048554-ubuntu-18.04.tar.xz
+  https://drivers.amd.com/drivers/linux/amdgpu-pro-20.20-1089974-ubuntu-20.04.tar.xz
 $ cd ~/rpmbuild/SPECS
 $ git clone https://github.com/secureworkstation/rpm-amdgpu-pro-opencl amdgpu-pro-opencl
 $ cd amdgpu-pro-opencl
 $ rpmbuild -ba amdgpu-pro-opencl.spec
-$ sudo dnf -y --nogpgcheck install ~/rpmbuild/RPMS/x86_64/amdgpu-pro-opencl-20.10.1048554-2.fc*.x86_64.rpm
+$ sudo dnf -y --nogpgcheck install ~/rpmbuild/RPMS/x86_64/amdgpu-pro-opencl-20.20.1089974-1.fc*.x86_64.rpm
 ```
 
 

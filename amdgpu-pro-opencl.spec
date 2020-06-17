@@ -3,7 +3,7 @@
 # https://aur.archlinux.org/packages/opencl-amd/
 
 # Download the source pkg with this command:
-# wget --referer https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx https://drivers.amd.com/drivers/linux/amdgpu-pro-20.10-1048554-ubuntu-18.04.tar.xz
+# wget --referer https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx https://drivers.amd.com/drivers/linux/amdgpu-pro-20.20-1089974-ubuntu-20.04.tar.xz
 
 # This package creates a wrapper file "amdgporun" which is similar to "optirun"
 # or "primusrun" from Bumblebee times. In short, it enables the proprietary
@@ -17,9 +17,9 @@
 # Therefore it's illegal to distribute the .src.rpm or .rpm files to third
 # parties.
 
-%global major 20.10
-%global minor 1048554
-%global distro ubuntu-18.04
+%global major 20.20
+%global minor 1089974
+%global distro ubuntu-20.04
 
 # Version of downstream libdrm-amdgpu package
 %global amdver 2.4.100
@@ -29,11 +29,11 @@
 
 Name:           amdgpu-pro-opencl
 Version:        %{major}.%{minor}
-Release:        2%{?dist}
+Release:        1%{?dist}
 Summary:        OpenCL ICD driver for AMD graphic cards
 
 License:        EULA NON-REDISTRIBUTABLE
-URL:            https://www.amd.com/en/support/kb/release-notes/rn-amdgpu-unified-linux-20-10
+URL:            https://www.amd.com/en/support/kb/release-notes/rn-amdgpu-unified-linux-20-20
 Source0:        https://drivers.amd.com/drivers/linux/amdgpu-pro-%{major}-%{minor}-%{distro}.tar.xz
 
 ExclusiveArch:  x86_64
@@ -117,6 +117,9 @@ ln -s libdro.so.2.4.0        %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdro.so.
 
 
 %changelog
+* Wed Jun 17 2020 secureworkstation - 20.20.1089974-1
+- Update to 20.20
+
 * Tue Mar 10 2020 secureworkstation - 20.10.1048554-2
 - Update to 20.10
 
