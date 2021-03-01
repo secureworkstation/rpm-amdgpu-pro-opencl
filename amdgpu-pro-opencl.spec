@@ -17,8 +17,8 @@
 # Therefore it's illegal to distribute the .src.rpm or .rpm files to third
 # parties.
 
-%global major 20.20
-%global minor 1089974
+%global major 20.45
+%global minor 1188099
 %global distro ubuntu-20.04
 
 # Version of downstream libdrm-amdgpu package
@@ -33,7 +33,7 @@ Release:        1%{?dist}
 Summary:        OpenCL ICD driver for AMD graphic cards
 
 License:        EULA NON-REDISTRIBUTABLE
-URL:            https://www.amd.com/en/support/kb/release-notes/rn-amdgpu-unified-linux-20-20
+URL:            https://www.amd.com/en/support/kb/release-notes/rn-amdgpu-unified-linux-20-45
 Source0:        https://drivers.amd.com/drivers/linux/amdgpu-pro-%{major}-%{minor}-%{distro}.tar.xz
 
 ExclusiveArch:  x86_64
@@ -49,12 +49,22 @@ is intended to work along with the free amdgpu stack.
 %prep
 %setup -q -n amdgpu-pro-%{major}-%{minor}-%{distro}
 mkdir files
-ar x opencl-amdgpu-pro-icd_%{major}-%{minor}_amd64.deb
+#roc
+ar x opencl-rocr-amdgpu-pro_%{major}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
-ar x opencl-amdgpu-pro-comgr_%{major}-%{minor}_amd64.deb
+ar x rocm-device-libs-amdgpu-pro_1.0.0-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
+ar x hsa-runtime-rocr-amdgpu_1.2.0-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
+ar x hsakmt-roct-amdgpu_1.0.9-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
+ar x hip-rocr-amdgpu-pro_%{major}-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
+#comgr
+ar x comgr-amdgpu-pro_1.7.0-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 # This one is probably unneeded for most users, but you never know.
-ar x opencl-amdgpu-pro-dev_%{major}-%{minor}_amd64.deb
+ar x opencl-rocr-amdgpu-pro-dev_%{major}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 ar x opencl-orca-amdgpu-pro-icd_%{major}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
@@ -100,7 +110,7 @@ install -p -m755 files/opt/amdgpu-pro/lib/x86_64-linux-gnu/* %{buildroot}%{_libd
 install -p -m755 files/opt/amdgpu/lib/x86_64-linux-gnu/* %{buildroot}%{_libdir}/amdgpu-pro-opencl/
 install -p -m644 files/etc/amd/amdapfxx.blb %{buildroot}%{_sysconfdir}/amd/
 install -p -m644 files/etc/OpenCL/vendors/* %{buildroot}%{_sysconfdir}/OpenCL/vendors/
-install -p -m644 files/usr/share/doc/opencl-amdgpu-pro-icd/copyright %{buildroot}%{_docdir}/amdgpu-pro-opencl/COPYRIGHT-AMDGPU-PRO
+install -p -m644 files/usr/share/doc/opencl-rocr-amdgpu-pro/copyright %{buildroot}%{_docdir}/amdgpu-pro-opencl/COPYRIGHT-AMDGPU-PRO
 install -p -m644 files/usr/share/doc/libdrm-amdgpu-amdgpu1/copyright %{buildroot}%{_docdir}/amdgpu-pro-opencl/COPYRIGHT-AMDGPU
 install -p -m755 amdgporun %{buildroot}%{_bindir}/
 
@@ -117,6 +127,9 @@ ln -s libdro.so.2.4.0        %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdro.so.
 
 
 %changelog
+* Sat Feb 20 2021 optimize-fast - 20.45.1188099-1
+- Update to 20.45
+
 * Wed Jun 17 2020 secureworkstation - 20.20.1089974-1
 - Update to 20.20
 
