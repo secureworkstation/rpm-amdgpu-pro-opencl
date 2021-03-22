@@ -77,6 +77,12 @@ tar -xJC files -f data.tar.xz
 ar x libdrm2-amdgpu_%{amdver}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 
+# include Vulkan libraries
+ar x vulkan-amdgpu-pro_%{major}-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
+ar x vulkan-amdgpu_%{major}-%{minor}_amd64.deb
+tar -xJC files -f data.tar.xz
+
 %build
 echo '#!/bin/bash' > amdgporun
 echo 'export LD_LIBRARY_PATH=/usr/lib64/amdgpu-pro-opencl' >> amdgporun
