@@ -17,8 +17,8 @@
 # Therefore it's illegal to distribute the .src.rpm or .rpm files to third
 # parties.
 
-%global major 20.45
-%global minor 1188099
+%global major 21.10
+%global minor 1247438
 %global distro ubuntu-20.04
 
 # Version of downstream libdrm-amdgpu package
@@ -127,6 +127,9 @@ ln -s libdro.so.2.4.0        %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdro.so.
 
 
 %changelog
+* Sun May 5 2021 tarirah 21.10.1247438-1
+- Update to 21.10
+
 * Sat Feb 20 2021 optimize-fast - 20.45.1188099-1
 - Update to 20.45
 
