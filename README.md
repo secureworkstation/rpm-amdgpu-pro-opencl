@@ -29,7 +29,7 @@ $ sudo dnf -y groupinstall 'RPM Development Tools'
 $ rpmdev-setuptree
 $ cd ~/rpmbuild/SOURCES
 $ wget --referer https://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx \
-  https://drivers.amd.com/drivers/linux/amdgpu-pro-20.45-1188099-ubuntu-20.04.tar.xz
+  https://drivers.amd.com/drivers/linux/amdgpu-pro-21.10-1247438-ubuntu-20.04.tar.xz
 $ cd ~/rpmbuild/SPECS
 $ git clone https://github.com/secureworkstation/rpm-amdgpu-pro-opencl amdgpu-pro-opencl
 $ cd amdgpu-pro-opencl

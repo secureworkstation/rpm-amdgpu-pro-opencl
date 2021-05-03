@@ -17,8 +17,8 @@
 # Therefore it's illegal to distribute the .src.rpm or .rpm files to third
 # parties.
 
-%global major 20.45
-%global minor 1188099
+%global major 21.10
+%global minor 1247438
 %global distro ubuntu-20.04
 
 # Version of downstream libdrm-amdgpu package
@@ -54,14 +54,14 @@ ar x opencl-rocr-amdgpu-pro_%{major}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 ar x rocm-device-libs-amdgpu-pro_1.0.0-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
-ar x hsa-runtime-rocr-amdgpu_1.2.0-%{minor}_amd64.deb
+ar x hsa-runtime-rocr-amdgpu_1.3.0-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 ar x hsakmt-roct-amdgpu_1.0.9-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 ar x hip-rocr-amdgpu-pro_%{major}-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 #comgr
-ar x comgr-amdgpu-pro_1.7.0-%{minor}_amd64.deb
+ar x comgr-amdgpu-pro_2.0.0-%{minor}_amd64.deb
 tar -xJC files -f data.tar.xz
 # This one is probably unneeded for most users, but you never know.
 ar x opencl-rocr-amdgpu-pro-dev_%{major}-%{minor}_amd64.deb
@@ -127,6 +127,9 @@ ln -s libdro.so.2.4.0        %{buildroot}%{_libdir}/amdgpu-pro-opencl/libdro.so.
 
 
 %changelog
+* Mon May 3 2021 tarirah 21.10.1247438-1
+- Update to 21.10
+
 * Sat Feb 20 2021 optimize-fast - 20.45.1188099-1
 - Update to 20.45
 
